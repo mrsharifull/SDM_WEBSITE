@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Backend\UserManagement\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -39,11 +41,22 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
-//XXXXXXXXXXXXXXXXXXXXXXXXXXX//
-//  	Custom Routes 		 //
-//XXXXXXXXXXXXXXXXXXXXXXXXXXX//
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXX//
+// Custom User Backend Routes  //
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXX//
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('user/index', [UserController::class,'index'])->name('user.index');
 	Route::get('user/create', [UserController::class,'create'])->name('user.create');
+});
+
+
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXX//
+// Custom Admin Backend Routes //
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXX//
+Route::get('admin/login', [AdminLoginController::class,'login'])->name('admin.login');
+Route::post('admin/login', [AdminLoginController::class,'loginCheck'])->name('admin.login');
+
+Route::group(['middleware' => 'admin'], function () {
+	Route::get('admin/dashboard', [AdminDashboardController::class,'dashboard'])->name('admin.dashboard');
 });
 
