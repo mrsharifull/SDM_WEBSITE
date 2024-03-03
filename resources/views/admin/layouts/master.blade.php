@@ -20,7 +20,7 @@
         <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
         <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
         @stack('css_link')
-        <link rel="stylesheet" href="{{asset('backend/css/custom.css')}}">
+        <link rel="stylesheet" href="{{asset('admin/css/custom.css')}}">
         @stack('css');
 
         @vite(['resources/sass/app.scss','resources/js/app.js',])
@@ -28,15 +28,15 @@
     </head>
     <body class="white-content {{ $class ?? '' }}">
             <div class="wrapper">
-                    @include('backend.includes.sidebar')
+                    @include('admin.includes.sidebar')
                 <div class="main-panel">
-                    @include('backend.includes.navbar')
+                    @include('admin.includes.navbar')
 
                     <div class="content">
                         @yield('content')
                     </div>
 
-                    @include('backend.includes.footer')
+                    @include('admin.includes.footer')
                 </div>
             </div>
         <div class="fixed-plugin">
@@ -82,7 +82,7 @@
         <script src="{{ asset('white') }}/js/theme.js"></script>
 
         @stack('js_link')
-        <script src="{{ asset('backend')}}"></script>
+        <script src="{{ asset('admin')}}"></script>
 
         <script>
             $(document).ready(function() {

@@ -1,17 +1,17 @@
 <div class="sidebar">
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="#" class="simple-text logo-mini">{{ _('WD') }}</a>
-            <a href="#" class="simple-text logo-normal">{{ _('White Dashboard') }}</a>
+            <a href="#" class="simple-text logo-mini">{{ _('AD') }}</a>
+            <a href="#" class="simple-text logo-normal">{{ _('Admin Dashboard') }}</a>
         </div>
         <ul class="nav">
             <li @if ($pageSlug == 'dashboard') class="active " @endif>
-                <a href="{{ route('home') }}">
+                <a href="{{ route('admin.dashboard') }}">
                     <i class="tim-icons icon-chart-pie-36"></i>
                     <p>{{ _('Dashboard') }}</p>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a data-toggle="collapse" href="#user-management" aria-expanded="true">
                     <i class="fa-solid fa-users" ></i>
                     <span class="nav-link-text" >{{ __('User Management') }}</span>
@@ -34,7 +34,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </div>
