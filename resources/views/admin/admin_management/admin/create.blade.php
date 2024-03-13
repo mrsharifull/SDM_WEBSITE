@@ -6,11 +6,15 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-6 col-md-8">
                             <h4 class="card-title">{{ __('Create Admin') }}</h4>
                         </div>
-                        <div class="col-4 text-right">
-
+                        <div class="col-6 col-md-4 text-right">
+                            @include('admin.partials.button', [
+                                'routeName' => 'am.admin.admin_list',
+                                'className' => 'btn-primary',
+                                'label' => 'Back',
+                            ])
                         </div>
                     </div>
                 </div>

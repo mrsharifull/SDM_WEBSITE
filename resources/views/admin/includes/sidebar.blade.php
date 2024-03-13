@@ -5,42 +5,56 @@
             <a href="#" class="simple-text logo-normal">{{ _('Admin Dashboard') }}</a>
         </div>
         <ul class="nav">
-            <li @if ($pageSlug == 'dashboard') class="active " @endif>
-                <a href="{{ route('admin.dashboard') }}">
-                    <i class="tim-icons icon-chart-pie-36"></i>
-                    <p>{{ _('Dashboard') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'admin') class="active " @endif>
-                <a href="{{ route('am.admin.admin_list') }}">
-                    <i class="tim-icons icon-chart-pie-36"></i>
-                    <p>{{ _('Admin') }}</p>
-                </a>
-            </li>
-            {{-- <li>
-                <a data-toggle="collapse" href="#user-management" aria-expanded="true">
-                    <i class="fa-solid fa-users" ></i>
-                    <span class="nav-link-text" >{{ __('User Management') }}</span>
-                    <b class="caret mt-1"></b>
-                </a>
+            @include('admin.partials.menu_buttons', [
+                'menuItems' => [
+                    [
+                        'pageSlug' => 'dashboard',
+                        'routeName' => 'admin.dashboard',
+                        'iconClass' => 'fa-solid fa-chart-line',
+                        'label' => 'Dashboard',
+                    ],
+                ],
+            ])
 
-                <div class="collapse @if ($pageSlug == 'user') show @endif " id="user-management">
-                    <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'user') class="active " @endif>
-                            <a href="{{ route('user.index')  }}">
-                                <i class="fa-solid fa-minus"></i>
-                                <p>{{ _('User') }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="{{ route('user.index')  }}">
-                                <i class="fa-solid fa-minus"></i>
-                                <p>{{ _('User Management') }}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li> --}}
+            {{-- Admin Management --}}
+            {{-- @if (mainMenuCheck(['role_list', 'permission_list', 'admin_list'])) --}}
+                <li>
+                    <a class="@if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') @else collapsed @endif" data-toggle="collapse"
+                        href="#admin-management"
+                        @if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') aria-expanded="true" @else aria-expanded="false" @endif>
+                        <i class="fa-solid fa-users-gear"></i>
+                        <span class="nav-link-text">{{ __('Admin Management') }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+
+                    <div class="collapse @if ($pageSlug == 'role' || $pageSlug == 'permission' || $pageSlug == 'admin') show @endif" id="admin-management">
+                        <ul class="nav pl-2">
+                            @include('admin.partials.menu_buttons', [
+                                'menuItems' => [
+                                    [
+                                        'pageSlug' => 'admin',
+                                        'routeName' => 'am.admin.admin_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'label' => 'Admins',
+                                    ],
+                                    // [
+                                    //     'pageSlug' => 'role',
+                                    //     'routeName' => 'am.role.role_list',
+                                    //     'iconClass' => 'fa-solid fa-minus',
+                                    //     'label' => 'Roles',
+                                    // ],
+                                    // [
+                                    //     'pageSlug' => 'permission',
+                                    //     'routeName' => 'am.permission.permission_list',
+                                    //     'iconClass' => 'fa-solid fa-minus',
+                                    //     'label' => 'Permission',
+                                    // ],
+                                ],
+                            ])
+                        </ul>
+                    </div>
+                </li>
+            {{-- @endif --}}
         </ul>
     </div>
 </div>
