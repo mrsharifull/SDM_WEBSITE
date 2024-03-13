@@ -6,16 +6,15 @@
             <div class="card ">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-6 col-md-8">
                             <h4 class="card-title">{{ __('Admin List') }}</h4>
                         </div>
-                        <div class="col-4 text-right">
-                            {{-- @include('admin.partials.button', [   
+                        <div class="col-6 col-md-4 text-right">
+                            @include('admin.partials.button', [   
                                 'routeName' => 'am.admin.admin_create',
                                 'className' => 'btn-primary',
                                 'label' => 'Add new admin',
-                            ]) --}}
-                            <a href="" class="btn btn-primary">Add new admin</a>
+                            ])
                         </div>
                     </div>
                 </div>
@@ -48,7 +47,7 @@
 
                                     <td> {{ $admin->created_user->name ?? 'system' }} </td>
                                     <td>
-                                        {{-- @include('admin.partials.action_buttons', [
+                                        @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
                                                     'routeName' => 'am.admin.admin_profile',
@@ -79,7 +78,7 @@
                                                     'delete' => true,
                                                 ],
                                             ],
-                                        ]) --}}
+                                        ])
                                     </td>
                                 </tr>
                             @endforeach
@@ -112,7 +111,7 @@
         </div>
     </div>
 @endsection
-{{-- @include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]]) --}}
+@include('admin.partials.datatable', ['columns_to_show' => [0, 1, 2, 3, 4, 5]])
 @push('js')
     <script>
         $(document).ready(function() {
@@ -144,11 +143,6 @@
                                         <th class="text-nowrap">Role</th>
                                         <th>:</th>
                                         <td>${data.role.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">IP Address</th>
-                                        <th>:</th>
-                                        <td>${data.ips}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
