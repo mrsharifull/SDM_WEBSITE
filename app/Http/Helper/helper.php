@@ -6,6 +6,10 @@ function timeFormate($time){
     return date($dateFormat." ".$timeFormat, strtotime($time));
 }
 
+function admin(){
+    return auth()->guard('admin')->user();
+}
+
 
 
 

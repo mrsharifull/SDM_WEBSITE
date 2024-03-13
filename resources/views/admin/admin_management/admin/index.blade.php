@@ -10,12 +10,7 @@
                             <h4 class="card-title">{{ __('Admin List') }}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            {{-- @include('admin.partials.button', [   
-                                'routeName' => 'am.admin.admin_create',
-                                'className' => 'btn-primary',
-                                'label' => 'Add new admin',
-                            ]) --}}
-                            <a href="" class="btn btn-primary">Add new admin</a>
+                            <a href="{{route('am.admin.admin_create')}}" class="btn btn-primary">Add new admin</a>
                         </div>
                     </div>
                 </div>

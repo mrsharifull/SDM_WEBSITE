@@ -11,6 +11,12 @@
                     <p>{{ _('Dashboard') }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'admin') class="active " @endif>
+                <a href="{{ route('am.admin.admin_list') }}">
+                    <i class="tim-icons icon-chart-pie-36"></i>
+                    <p>{{ _('Admin') }}</p>
+                </a>
+            </li>
             {{-- <li>
                 <a data-toggle="collapse" href="#user-management" aria-expanded="true">
                     <i class="fa-solid fa-users" ></i>
