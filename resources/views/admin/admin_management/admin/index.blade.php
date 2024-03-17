@@ -55,7 +55,7 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => 'am.admin.admin_profile',
+                                                    'routeName' => '',
                                                     'params' => [$admin->id],
                                                     'label' => 'Profile',
                                                 ],

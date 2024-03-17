@@ -16,7 +16,7 @@
         $(this).DataTable({
             dom: 'Bfrtip',
             responsive: true,
-            iDisplayLength: 50,
+            iDisplayLength: 10,
             order: [[0, order]],
             buttons: [{
                     extend: 'pdfHtml5',
