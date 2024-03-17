@@ -96,28 +96,5 @@ class AdminController extends Controller
 
     }
 
-   
-    public function create(): View
-    {
-        $data['roles'] = Role::latest()->get();
-        return view('admin.admin_management.admin.create',$data);
-    }
-    public function store(AdminRequest $req): RedirectResponse
-    {
-        $admin = new Admin();
-        $admin->name = $req->name;
-        $admin->email = $req->email;
-        $admin->role_id = $req->role;
-        $admin->password = $req->password;
-        $admin->created_by = admin()->id;
-        $admin->save();
-
-        $admin->assignRole($admin->role->name);
-
-        flash()->addSuccess('Admin '.$admin->name.' created successfully.');
-        return redirect()->route('am.admin.admin_list');
-    }
-   
-
     
 }

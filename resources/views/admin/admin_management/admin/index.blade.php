@@ -47,6 +47,11 @@
 
                                     <td> {{ $admin->created_user->name ?? 'system' }} </td>
                                     <td>
+
+                                       
+
+
+
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
@@ -56,7 +61,6 @@
                                                 ],
                                                 [
                                                     'routeName' => 'javascript:void(0)',
-                                                    'params' => [$admin->id],
                                                     'label' => 'View Details',
                                                     'className' => 'view',
                                                     'data-id' => $admin->id,
@@ -106,6 +110,7 @@
                     </button>
                 </div>
                 <div class="modal-body modal_data">
+
                 </div>
             </div>
         </div>
@@ -121,7 +126,7 @@
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
-                    method: 'GET',
+                    method: 'GET', 
                     dataType: 'json',
                     success: function(data) {
                         let status = data.status = 1 ? 'Active' : 'Deactive';

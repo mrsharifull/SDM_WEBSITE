@@ -106,9 +106,7 @@ function timeFormate($time){
     $timeFormat = env('TIME_FORMAT', 'H:i A');
     return date($dateFormat." ".$timeFormat, strtotime($time));
 }
-function admin(){
-    return auth()->guard('admin')->user();
-}
+
 function mainMenuCheck($routes){
     $check = false;
     foreach($routes as $route){
