@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminManagement\AdminController;
+use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Backend\UserManagement\UserController;
@@ -74,14 +75,14 @@ Route::group(['middleware' => 'admin'], function () {
 			Route::get('status/{id}', 'status')->name('status.admin_edit');
 			Route::get('delete/{id}', 'delete')->name('admin_delete');
 		});
-		// Route::controller(PermissionController::class, 'permission')->prefix('permission')->name('permission.')->group(function () {
-		// 	Route::get('index', 'index')->name('permission_list');
-		// 	Route::get('details/{id}', 'details')->name('details.permission_list');
-		// 	Route::get('create', 'create')->name('permission_create');
-		// 	Route::post('create', 'store')->name('permission_create');
-		// 	Route::get('edit/{id}', 'edit')->name('permission_edit');
-		// 	Route::put('edit/{id}', 'update')->name('permission_edit');
-		// });
+		Route::controller(PermissionController::class, 'permission')->prefix('permission')->name('permission.')->group(function () {
+			Route::get('index', 'index')->name('permission_list');
+			Route::get('details/{id}', 'details')->name('details.permission_list');
+			Route::get('create', 'create')->name('permission_create');
+			Route::post('create', 'store')->name('permission_create');
+			Route::get('edit/{id}', 'edit')->name('permission_edit');
+			Route::put('edit/{id}', 'update')->name('permission_edit');
+		});
 		// Route::controller(AdminRoleController::class, 'role')->prefix('role')->name('role.')->group(function () {
 		// 	Route::get('index', 'index')->name('role_list');
 		// 	Route::get('details/{id}', 'details')->name('details.role_list');
