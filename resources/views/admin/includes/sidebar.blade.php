@@ -34,21 +34,19 @@
                                     [
                                         'pageSlug' => 'admin',
                                         'routeName' => 'am.admin.admin_list',
-                                        'iconClass' => 'fa-solid fa-minus',
                                         'label' => 'Admins',
                                     ],
-                                    // [
-                                    //     'pageSlug' => 'role',
-                                    //     'routeName' => 'am.role.role_list',
-                                    //     'iconClass' => 'fa-solid fa-minus',
-                                    //     'label' => 'Roles',
-                                    // ],
-                                    // [
-                                    //     'pageSlug' => 'permission',
-                                    //     'routeName' => 'am.permission.permission_list',
-                                    //     'iconClass' => 'fa-solid fa-minus',
-                                    //     'label' => 'Permission',
-                                    // ],
+                                    [
+                                        'pageSlug' => 'role',
+                                        'routeName' => 'am.role.role_list',
+                                        'iconClass' => 'fa-solid fa-minus',
+                                        'label' => 'Roles',
+                                    ],
+                                    [
+                                        'pageSlug' => 'permission',
+                                        'routeName' => 'am.permission.permission_list',
+                                        'label' => 'Permissions',
+                                    ],
                                 ],
                             ])
                         </ul>

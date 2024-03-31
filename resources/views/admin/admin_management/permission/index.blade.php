@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'admin'])
+@extends('admin.layouts.master', ['pageSlug' => 'permission'])
 
 @section('content')
     <div class="row">
@@ -7,11 +7,17 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-6 col-md-8">
-                            <h4 class="card-title">{{ __('Admin List') }}</h4>
+                            <h4 class="card-title">{{ __('Permission List') }}</h4>
                         </div>
                         <div class="col-6 col-md-4 text-right">
+                            
                             @include('admin.partials.button', [   
-                                'routeName' => 'am.admin.admin_create',
+                                'routeName' => 'export.permissions',
+                                'className' => 'btn-primary',
+                                'label' => 'Export Permissions',
+                            ])
+                            @include('admin.partials.button', [   
+                                'routeName' => 'am.permission.permission_create',
                                 'className' => 'btn-primary',
                                 'label' => 'Add new admin',
                             ])
@@ -25,27 +31,22 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
-                                <th>{{ __('Email') }}</th>
-                                <th>{{ __('Role') }}</th>
-                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Prefix') }}</th>
+                                <th>{{ __('Guard Name') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($admins as $admin)
+                            @foreach ($permissions as $permission)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $admin->name }} </td>
-                                    <td> {{ $admin->email }} </td>
-                                    <td> {{ $admin->role->name }} </td>
-                                    <td>
-                                        <span class="{{ $admin->getStatusBadgeClass() }}">{{ $admin->getStatus() }}</span>
-                                    </td>
-                                    <td>{{ timeFormate($admin->created_at) }}</td>
-
-                                    <td> {{ $admin->created_user->name ?? 'system' }} </td>
+                                    <td> {{ $permission->name }} </td>
+                                    <td> {{ $permission->prefix }} </td>
+                                    <td> {{ $permission->guard_name }} </td>
+                                    <td>{{ $permission->created_date() }}</td>
+                                    <td> {{ $permission->created_user_name() }} </td>
                                     <td>
 
                                        
@@ -55,31 +56,15 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
-                                                    'routeName' => '',
-                                                    'params' => [$admin->id],
-                                                    'label' => 'Profile',
-                                                ],
-                                                [
                                                     'routeName' => 'javascript:void(0)',
                                                     'label' => 'View Details',
                                                     'className' => 'view',
-                                                    'data-id' => $admin->id,
+                                                    'data-id' => $permission->id,
                                                 ],
                                                 [
-                                                    'routeName' => 'am.admin.admin_edit',
-                                                    'params' => [$admin->id],
+                                                    'routeName' => 'am.permission.permission_edit',
+                                                    'params' => [$permission->id],
                                                     'label' => 'Update',
-                                                ],
-                                                [
-                                                    'routeName' => 'am.admin.status.admin_edit',
-                                                    'params' => [$admin->id],
-                                                    'label' => $admin->getBtnStatus(),
-                                                ],
-                                                [
-                                                    'routeName' => 'am.admin.admin_delete',
-                                                    'params' => [$admin->id],
-                                                    'label' => 'Delete',
-                                                    'delete' => true,
                                                 ],
                                             ],
                                         ])
@@ -104,7 +89,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Admin Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Permission Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -122,16 +107,13 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('am.admin.details.admin_list', ['id']) }}");
+                let url = ("{{ route('am.permission.details.permission_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
                     method: 'GET', 
                     dataType: 'json',
                     success: function(data) {
-                        let status = data.status = 1 ? 'Active' : 'Deactive';
-                        let statusClass = data.status = 1 ? 'badge-success' :
-                            'badge-warning';
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
@@ -140,19 +122,14 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Email</th>
+                                        <th class="text-nowrap">Prefix</th>
                                         <th>:</th>
-                                        <td>${data.email}</td>
+                                        <td>${data.prefix}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Role</th>
+                                        <th class="text-nowrap">Guard Name</th>
                                         <th>:</th>
-                                        <td>${data.role.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Status</th>
-                                        <th>:</th>
-                                        <td><span class="badge ${statusClass}">${status}</span></td>
+                                        <td>${data.guard_name}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created At</th>

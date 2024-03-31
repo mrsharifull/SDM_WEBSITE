@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
 class Admin extends AuthBaseModel
 {
     use HasRoles;

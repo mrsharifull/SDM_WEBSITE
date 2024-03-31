@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-            
+        'am.'
         ];
 }
 
@@ -106,9 +106,7 @@ function timeFormate($time){
     $timeFormat = env('TIME_FORMAT', 'H:i A');
     return date($dateFormat." ".$timeFormat, strtotime($time));
 }
-function admin(){
-    return auth()->guard('admin')->user();
-}
+
 function mainMenuCheck($routes){
     $check = false;
     foreach($routes as $route){
@@ -119,6 +117,10 @@ function mainMenuCheck($routes){
                 
         }
     return $check;
+}
+
+function admin(){
+    return auth()->guard('admin')->user();
 }
 
 
