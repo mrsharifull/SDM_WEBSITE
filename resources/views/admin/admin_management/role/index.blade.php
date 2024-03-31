@@ -1,4 +1,4 @@
-@extends('admin.layouts.master', ['pageSlug' => 'permission'])
+@extends('admin.layouts.master', ['pageSlug' => 'role'])
 
 @section('content')
     <div class="row">
@@ -7,19 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-6 col-md-8">
-                            <h4 class="card-title">{{ __('Permission List') }}</h4>
+                            <h4 class="card-title">{{ __('Role List') }}</h4>
                         </div>
                         <div class="col-6 col-md-4 text-right">
-                            
                             @include('admin.partials.button', [   
-                                'routeName' => 'export.permissions',
+                                'routeName' => 'am.role.role_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Export Permissions',
-                            ])
-                            @include('admin.partials.button', [   
-                                'routeName' => 'am.permission.permission_create',
-                                'className' => 'btn-primary',
-                                'label' => 'Add new admin',
+                                'label' => 'Add new role',
                             ])
                         </div>
                     </div>
@@ -31,7 +25,6 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
-                                <th>{{ __('Prefix') }}</th>
                                 <th>{{ __('Guard Name') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -39,14 +32,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($permissions as $permission)
+                            @foreach ($roles as $role)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $permission->name }} </td>
-                                    <td> {{ $permission->prefix }} </td>
-                                    <td> {{ $permission->guard_name }} </td>
-                                    <td>{{ $permission->created_date() }}</td>
-                                    <td> {{ $permission->created_user_name() }} </td>
+                                    <td> {{ $role->name }} </td>
+                                    <td> {{ $role->guard_name }} </td>
+                                    <td>{{ $role->created_date() }}</td>
+                                    <td> {{ $role->created_user_name()}} </td>
                                     <td>
 
                                        
@@ -56,15 +48,26 @@
                                         @include('admin.partials.action_buttons', [
                                             'menuItems' => [
                                                 [
+                                                    'routeName' => '',
+                                                    'params' => [$role->id],
+                                                    'label' => 'Profile',
+                                                ],
+                                                [
                                                     'routeName' => 'javascript:void(0)',
                                                     'label' => 'View Details',
                                                     'className' => 'view',
-                                                    'data-id' => $permission->id,
+                                                    'data-id' => $role->id,
                                                 ],
                                                 [
-                                                    'routeName' => 'am.permission.permission_edit',
-                                                    'params' => [$permission->id],
+                                                    'routeName' => 'am.role.role_edit',
+                                                    'params' => [$role->id],
                                                     'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'am.role.role_delete',
+                                                    'params' => [$role->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
                                                 ],
                                             ],
                                         ])
@@ -83,13 +86,13 @@
         </div>
     </div>
 
-    {{-- Admin Details Modal  --}}
+    {{-- Role Details Modal  --}}
     <div class="modal view_modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Permission Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Role Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -107,7 +110,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('am.permission.details.permission_list', ['id']) }}");
+                let url = ("{{ route('am.role.details.role_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -122,15 +125,16 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Prefix</th>
-                                        <th>:</th>
-                                        <td>${data.prefix}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Guard Name</th>
+                                        <th class="text-nowrap">Email</th>
                                         <th>:</th>
                                         <td>${data.guard_name}</td>
                                     </tr>
+                                    <tr>
+                                        <th class="text-nowrap">Permissions</th>
+                                        <th>:</th>
+                                        <td>${data.permissionNames}</td>
+                                    </tr>
+
                                     <tr>
                                         <th class="text-nowrap">Created At</th>
                                         <th>:</th>

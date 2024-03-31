@@ -1,0 +1,129 @@
+@extends('admin.layouts.master', ['pageSlug' => 'role'])
+@push('css')
+    <style>
+        .groupName {
+            background: #cdcdcd;
+            border-bottom: 2px solid #182456;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .groupName label {
+            color: #000;
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .list-items li {
+            list-style: none;
+            background: #cdcdcd;
+            border-bottom: 2px solid #182456;
+        }
+
+        .list-items li label {
+            color: #000;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+    </style>
+@endpush
+@section('content')
+    <div class="row px-3 pt-3">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-6 col-md-8">
+                            <h4 class="card-title">{{ __('Edit Role') }}</h4>
+                        </div>
+                        <div class="col-6 col-md-4 text-right">
+                            @include('admin.partials.button', [
+                                'routeName' => 'am.role.role_list',
+                                'className' => 'btn-primary',
+                                'label' => 'Back',
+                            ])
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('am.role.role_edit',$role->id) }}">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group">
+                            <label>{{__('Name')}}</label>
+                            <input type="text" name="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Enter name"
+                                value="{{ $role->name }}">
+                            @include('alerts.feedback', ['field' => 'name'])
+                        </div>
+
+
+                        <div class="row">
+                            @foreach ($groupedPermissions->chunk(1) as $chunks)
+                                <div class="col-md-3">
+
+                                    @foreach ($chunks as $prefix => $permissions)
+                                        <h3 class="m-0 pl-4 groupName">
+                                            <input type="checkbox" class="prefix-checkbox"
+                                                id="prefix-checkbox-{{ $prefix }}" data-prefix="{{ $prefix }}">
+                                            <label for="prefix-checkbox-{{ $prefix }}">{{ $prefix }}</label>
+                                        </h3>
+                                        <ul class="list-items">
+                                            @foreach ($permissions as $permission)
+                                                <li class="pl-4">
+                                                    <input type="checkbox" name="permissions[]"
+                                                        id="permission-checkbox-{{ $permission->id }}"
+                                                        value="{{ $permission->id }}" class="permission-checkbox"
+                                                        @if($role->hasPermissionTo($permission->name)) checked @endif>
+                                                    <label
+                                                        for="permission-checkbox-{{ $permission->id }}">{{ Str::replace('_', ' ', $permission->name) }}</label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endforeach
+                                </div>
+                            @endforeach
+                        </div>
+                      
+                        <button type="submit" class="btn btn-primary">{{__('Update')}}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@push('js')
+    <script>
+        $(document).ready(function() {
+            var prefix = $('.prefix-checkbox');
+            prefix.each(function(){
+              var permissionCheckboxes = $(this).closest('h3').next('ul').find('.permission-checkbox');
+              var isAllChecked = permissionCheckboxes.length === permissionCheckboxes.filter(':checked').length;
+              $(this).prop('checked', isAllChecked);
+            });
+
+
+            $('.prefix-checkbox').on('click', function() {
+                var prefix = $(this).data('prefix');
+                var permissionCheckboxes = $(this).closest('h3').next('ul').find('.permission-checkbox');
+                var isChecked = $(this).prop('checked');
+
+                permissionCheckboxes.prop('checked', isChecked);
+            });
+
+            $('.permission-checkbox').on('click', function() {
+                var checkboxId = $(this).attr('id');
+                var prefix = $(this).closest('ul').prev('h3').find('.prefix-checkbox');
+                var permissionCheckboxes = $(this).closest('ul').find('.permission-checkbox');
+                var isAllChecked = permissionCheckboxes.length === permissionCheckboxes.filter(':checked')
+                    .length;
+
+                prefix.prop('checked', isAllChecked);
+            });
+            $('label[for^="permission-checkbox-"]').on('click', function() {
+                var checkboxId = $(this).attr('for');
+                $('#' + checkboxId).prop('checked');
+            });
+        });
+    </script>
+@endpush

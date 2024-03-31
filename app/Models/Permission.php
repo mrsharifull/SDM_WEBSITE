@@ -3,12 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class Permission extends SpatiePermission
 {
-    use HasFactory,HasRoles;
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'guard_name',
+        'prefix',
+    ];
+
+
     function created_user(){
         return $this->belongsTo(Admin::class,'created_by');
     }
