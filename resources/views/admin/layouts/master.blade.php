@@ -21,7 +21,7 @@
         <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
         @stack('css_link')
         <link rel="stylesheet" href="{{asset('admin/css/custom.css')}}">
-        @stack('css');
+        @stack('css')
 
         @vite(['resources/sass/app.scss','resources/js/app.js',])
 
