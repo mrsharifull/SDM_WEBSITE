@@ -53,6 +53,33 @@
                     </div>
                 </li>
             {{-- @endif --}}
+
+
+
+            {{-- Setup Routes --}}
+            <li>
+                <a class="@if ($pageSlug == 'class') @else collapsed @endif" data-toggle="collapse"
+                    href="#setup"
+                    @if ($pageSlug == 'class') aria-expanded="true" @else aria-expanded="false" @endif>
+                    <i class="fa-solid fa-gear"></i>
+                    <span class="nav-link-text">{{ __('Setup') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'class') show @endif" id="setup">
+                    <ul class="nav pl-2">
+                        @include('admin.partials.menu_buttons', [
+                            'menuItems' => [
+                                [
+                                    'pageSlug' => 'class',
+                                    'routeName' => 'setup.class.class_list',
+                                    'label' => 'Classes',
+                                ],
+                            ],
+                        ])
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </div>

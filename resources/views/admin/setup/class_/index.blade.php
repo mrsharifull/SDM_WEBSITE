@@ -1,5 +1,5 @@
-@extends('admin.layouts.master', ['pageSlug' => 'permission'])
-
+@extends('admin.layouts.master', ['pageSlug' => 'class'])
+@section('title', 'Class List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -7,19 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-6 col-md-8">
-                            <h4 class="card-title">{{ __('Permission List') }}</h4>
+                            <h4 class="card-title">{{ __('Class List') }}</h4>
                         </div>
                         <div class="col-6 col-md-4 text-right">
-                            
                             @include('admin.partials.button', [   
-                                'routeName' => 'export.permissions',
+                                'routeName' => 'setup.class.class_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Export Permissions',
-                            ])
-                            @include('admin.partials.button', [   
-                                'routeName' => 'am.permission.permission_create',
-                                'className' => 'btn-primary',
-                                'label' => 'Add new permission',
+                                'label' => 'Add new class',
                             ])
                         </div>
                     </div>
@@ -31,22 +25,24 @@
                             <tr>
                                 <th>{{ __('SL') }}</th>
                                 <th>{{ __('Name') }}</th>
-                                <th>{{ __('Prefix') }}</th>
-                                <th>{{ __('Guard Name') }}</th>
+                                <th>{{ __('Class Number') }}</th>
+                                <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($permissions as $permission)
+                            @foreach ($classes as $class)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ ucwords(str_replace('_', ' ', $permission->name)) }}</td>
-                                    <td> {{ $permission->prefix }} </td>
-                                    <td> {{ $permission->guard_name }} </td>
-                                    <td>{{ $permission->created_date() }}</td>
-                                    <td> {{ $permission->created_user_name() }} </td>
+                                    <td> {{ $class->name }}</td>
+                                    <td> {{ $class->class_number }} </td>
+                                    <td>
+                                        <span class="{{ $class->getStatusBadgeClass() }}">{{ $class->getStatus() }}</span>
+                                    </td>
+                                    <td>{{ $class->created_date() }}</td>
+                                    <td> {{ $class->created_user_name() }} </td>
                                     <td>
 
                                        
@@ -59,12 +55,23 @@
                                                     'routeName' => 'javascript:void(0)',
                                                     'label' => 'View Details',
                                                     'className' => 'view',
-                                                    'data-id' => $permission->id,
+                                                    'data-id' => $class->id,
                                                 ],
                                                 [
-                                                    'routeName' => 'am.permission.permission_edit',
-                                                    'params' => [$permission->id],
+                                                    'routeName' => 'setup.class.class_edit',
+                                                    'params' => [$class->id],
                                                     'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'setup.class.status.class_edit',
+                                                    'params' => [$class->id],
+                                                    'label' => $class->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'setup.class.class_delete',
+                                                    'params' => [$class->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
                                                 ],
                                             ],
                                         ])
@@ -89,7 +96,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Permission Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Class Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -107,7 +114,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('am.permission.details.permission_list', ['id']) }}");
+                let url = ("{{ route('setup.class.details.class_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -122,14 +129,9 @@
                                         <td>${data.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Prefix</th>
+                                        <th class="text-nowrap">Class Number</th>
                                         <th>:</th>
-                                        <td>${data.prefix}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-nowrap">Guard Name</th>
-                                        <th>:</th>
-                                        <td>${data.guard_name}</td>
+                                        <td>${data.class_number}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Created At</th>

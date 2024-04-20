@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\Setup\ClassController;
 use App\Http\Controllers\Backend\UserManagement\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -99,6 +100,21 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('edit/{id}', 'edit')->name('role_edit');
 			Route::put('edit/{id}', 'update')->name('role_edit');
 			Route::get('delete/{id}', 'delete')->name('role_delete');
+		});
+	});
+
+	// Admin > Setup
+	Route::group(['as' => 'setup.', 'prefix' => 'setup'], function () {
+
+		Route::controller(ClassController::class, 'class')->prefix('class')->name('class.')->group(function () {
+			Route::get('index', 'index')->name('class_list');
+			Route::get('details/{id}', 'details')->name('details.class_list');
+			Route::get('create', 'create')->name('class_create');
+			Route::post('create', 'store')->name('class_create');
+			Route::get('edit/{id}', 'edit')->name('class_edit');
+			Route::put('edit/{id}', 'update')->name('class_edit');
+			Route::get('status/{id}', 'status')->name('status.class_edit');
+			Route::get('delete/{id}', 'delete')->name('class_delete');
 		});
 	});
 
