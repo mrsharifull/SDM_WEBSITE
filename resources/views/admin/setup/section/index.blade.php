@@ -1,5 +1,5 @@
-@extends('admin.layouts.master', ['pageSlug' => 'class'])
-@section('title', 'Class List')
+@extends('admin.layouts.master', ['pageSlug' => 'section'])
+@section('title', 'Section List')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -7,13 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-6 col-md-8">
-                            <h4 class="card-title">{{ __('Class List') }}</h4>
+                            <h4 class="card-title">{{ __('Section List') }}</h4>
                         </div>
                         <div class="col-6 col-md-4 text-right">
                             @include('admin.partials.button', [   
-                                'routeName' => 'setup.class.class_create',
+                                'routeName' => 'setup.section.section_create',
                                 'className' => 'btn-primary',
-                                'label' => 'Add new class',
+                                'label' => 'Add new section',
                             ])
                         </div>
                     </div>
@@ -24,8 +24,8 @@
                         <thead>
                             <tr>
                                 <th>{{ __('SL') }}</th>
-                                <th>{{ __('Name') }}</th>
-                                <th>{{ __('Class Number') }}</th>
+                                <th>{{ __('Class') }}</th>
+                                <th>{{ __('Section') }}</th>
                                 <th>{{ __('Status') }}</th>
                                 <th>{{ __('Creation date') }}</th>
                                 <th>{{ __('Created by') }}</th>
@@ -33,16 +33,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($classes as $class)
+                            @foreach ($sections as $section)
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
-                                    <td> {{ $class->name }}</td>
-                                    <td> {{ $class->class_number }} </td>
+                                    <td> {{ $section->class_->name }}</td>
+                                    <td> {{ $section->name }} </td>
                                     <td>
-                                        <span class="{{ $class->getStatusBadgeClass() }}">{{ $class->getStatus() }}</span>
+                                        <span class="{{ $section->getStatusBadgeClass() }}">{{ $section->getStatus() }}</span>
                                     </td>
-                                    <td>{{ $class->created_date() }}</td>
-                                    <td> {{ $class->created_user_name() }} </td>
+                                    <td>{{ $section->created_date() }}</td>
+                                    <td> {{ $section->created_user_name() }} </td>
                                     <td>
 
                                        
@@ -55,21 +55,21 @@
                                                     'routeName' => 'javascript:void(0)',
                                                     'label' => 'View Details',
                                                     'className' => 'view',
-                                                    'data-id' => $class->id,
+                                                    'data-id' => $section->id,
                                                 ],
                                                 [
-                                                    'routeName' => 'setup.class.class_edit',
-                                                    'params' => [$class->id],
+                                                    'routeName' => 'setup.section.section_edit',
+                                                    'params' => [$section->id],
                                                     'label' => 'Update',
                                                 ],
                                                 [
-                                                    'routeName' => 'setup.class.status.class_edit',
-                                                    'params' => [$class->id],
-                                                    'label' => $class->getBtnStatus(),
+                                                    'routeName' => 'setup.section.status.section_edit',
+                                                    'params' => [$section->id],
+                                                    'label' => $section->getBtnStatus(),
                                                 ],
                                                 [
-                                                    'routeName' => 'setup.class.class_delete',
-                                                    'params' => [$class->id],
+                                                    'routeName' => 'setup.section.section_delete',
+                                                    'params' => [$section->id],
                                                     'label' => 'Delete',
                                                     'delete' => true,
                                                 ],
@@ -96,7 +96,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Class Details') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Section Details') }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -114,7 +114,7 @@
         $(document).ready(function() {
             $('.view').on('click', function() {
                 let id = $(this).data('id');
-                let url = ("{{ route('setup.class.details.class_list', ['id']) }}");
+                let url = ("{{ route('setup.section.details.section_list', ['id']) }}");
                 let _url = url.replace('id', id);
                 $.ajax({
                     url: _url,
@@ -127,14 +127,14 @@
                         var result = `
                                 <table class="table table-striped">
                                     <tr>
-                                        <th class="text-nowrap">Name</th>
+                                        <th class="text-nowrap">Class</th>
                                         <th>:</th>
-                                        <td>${data.name}</td>
+                                        <td>${data.class_.name}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-nowrap">Class Number</th>
+                                        <th class="text-nowrap">Section</th>
                                         <th>:</th>
-                                        <td>${data.class_number}</td>
+                                        <td>${data.name}</td>
                                     </tr>
                                     <tr>
                                         <th class="text-nowrap">Status</th>
