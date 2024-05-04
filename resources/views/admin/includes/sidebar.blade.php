@@ -71,6 +71,16 @@
                         @include('admin.partials.menu_buttons', [
                             'menuItems' => [
                                 [
+                                    'pageSlug' => 'blood_group',
+                                    'routeName' => 'setup.bg.bg_list',
+                                    'label' => 'Bloodgroups',
+                                ],
+                                [
+                                    'pageSlug' => 'department',
+                                    'routeName' => 'setup.department.department_list',
+                                    'label' => 'Departments',
+                                ],
+                                [
                                     'pageSlug' => 'class',
                                     'routeName' => 'setup.class.class_list',
                                     'label' => 'Classes',
@@ -80,11 +90,7 @@
                                     'routeName' => 'setup.section.section_list',
                                     'label' => 'Sections',
                                 ],
-                                [
-                                    'pageSlug' => 'blood_group',
-                                    'routeName' => 'setup.bg.bg_list',
-                                    'label' => 'Bloodgroup',
-                                ],
+                                
                             ],
                         ])
                     </ul>

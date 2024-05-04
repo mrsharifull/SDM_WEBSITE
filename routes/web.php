@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\setup\BloodGroupController;
 use App\Http\Controllers\Admin\Setup\ClassController;
+use App\Http\Controllers\admin\setup\DepartmentController;
 use App\Http\Controllers\Admin\Setup\SectionController;
 use App\Http\Controllers\Backend\UserManagement\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -137,6 +138,16 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::put('edit/{id}', 'update')->name('bg_edit');
 			Route::get('status/{id}', 'status')->name('status.bg_edit');
 			Route::get('delete/{id}', 'delete')->name('bg_delete');
+		});
+		Route::controller(DepartmentController::class)->prefix('department')->name('department.')->group(function () {
+			Route::get('index', 'index')->name('department_list');
+			Route::get('details/{id}', 'details')->name('details.department_list');
+			Route::get('create', 'create')->name('department_create');
+			Route::post('create', 'store')->name('department_create');
+			Route::get('edit/{id}', 'edit')->name('department_edit');
+			Route::put('edit/{id}', 'update')->name('department_edit');
+			Route::get('status/{id}', 'status')->name('status.department_edit');
+			Route::get('delete/{id}', 'delete')->name('department_delete');
 		});
 	});
 
