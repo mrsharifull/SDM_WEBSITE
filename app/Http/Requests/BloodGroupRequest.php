@@ -4,12 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassRequest extends FormRequest
+class BloodGroupRequest extends FormRequest
 {
+
     public function authorize(): bool
     {
         return true;
     }
+
     public function rules(): array
     {
         return [
@@ -21,16 +23,14 @@ class ClassRequest extends FormRequest
     protected function store(): array
     {
         return [
-            'name' => 'required|unique:classes,name',
-            'class_number' => 'required|numeric|unique:classes,class_number',
+            'name' => 'required|unique:blood_groups,name',
         ];
     }
 
     protected function update(): array
     {
         return [
-            'name' => 'required|unique:classes,name,'. $this->route('id'),
-            'class_number' => 'required|numeric|unique:classes,class_number,'. $this->route('id'),
+            'name' => 'required|unique:blood_groups,name,'. $this->route('id'),
         ];
     }
 }

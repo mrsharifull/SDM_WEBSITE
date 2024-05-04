@@ -45,8 +45,8 @@
                                     <td> {{ ucwords(str_replace('_', ' ', $permission->name)) }}</td>
                                     <td> {{ $permission->prefix }} </td>
                                     <td> {{ $permission->guard_name }} </td>
-                                    <td>{{ $permission->created_date() }}</td>
-                                    <td> {{ $permission->created_user_name() }} </td>
+                                    <td>{{ timeFormate($permission->created_at) }}</td>
+                                    <td> {{ c_user_name($permission->created_user) }} </td>
                                     <td>
 
                                        

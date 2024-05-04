@@ -3,26 +3,29 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Traits\CommonColumnsTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
-    use SoftDeletes, CommonColumnsTrait;
+    use CommonColumnsTrait, SoftDeletes;
     public function up(): void
     {
-        Schema::create('classes', function (Blueprint $table) {
+        Schema::create('blood_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('class_number')->unique();
             $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
             $this->addCommonColumns($table);
         });
     }
+
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('classes');
+        Schema::dropIfExists('blood_groups');
     }
 };

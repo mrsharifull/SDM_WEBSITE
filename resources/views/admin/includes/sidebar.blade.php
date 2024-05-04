@@ -80,6 +80,11 @@
                                     'routeName' => 'setup.section.section_list',
                                     'label' => 'Sections',
                                 ],
+                                [
+                                    'pageSlug' => 'blood_group',
+                                    'routeName' => 'setup.bg.bg_list',
+                                    'label' => 'Bloodgroup',
+                                ],
                             ],
                         ])
                     </ul>

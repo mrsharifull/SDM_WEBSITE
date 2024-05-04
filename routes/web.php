@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\admin\setup\BloodGroupController;
 use App\Http\Controllers\Admin\Setup\ClassController;
 use App\Http\Controllers\Admin\Setup\SectionController;
 use App\Http\Controllers\Backend\UserManagement\UserController;
@@ -74,7 +75,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 	// Admin Management Routes
 	Route::group(['as' => 'am.', 'prefix' => 'admin-management'], function () {
 
-		Route::controller(AdminController::class, 'admin')->prefix('admin')->name('admin.')->group(function () {
+		Route::controller(AdminController::class)->prefix('admin')->name('admin.')->group(function () {
 			Route::get('index', 'index')->name('admin_list');
 			Route::get('details/{id}', 'details')->name('details.admin_list');
 			Route::get('profile/{id}', 'profile')->name('admin_profile');
@@ -85,7 +86,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('status/{id}', 'status')->name('status.admin_edit');
 			Route::get('delete/{id}', 'delete')->name('admin_delete');
 		});
-		Route::controller(PermissionController::class, 'permission')->prefix('permission')->name('permission.')->group(function () {
+		Route::controller(PermissionController::class)->prefix('permission')->name('permission.')->group(function () {
 			Route::get('index', 'index')->name('permission_list');
 			Route::get('details/{id}', 'details')->name('details.permission_list');
 			Route::get('create', 'create')->name('permission_create');
@@ -93,7 +94,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('edit/{id}', 'edit')->name('permission_edit');
 			Route::put('edit/{id}', 'update')->name('permission_edit');
 		});
-		Route::controller(RoleController::class, 'role')->prefix('role')->name('role.')->group(function () {
+		Route::controller(RoleController::class)->prefix('role')->name('role.')->group(function () {
 			Route::get('index', 'index')->name('role_list');
 			Route::get('details/{id}', 'details')->name('details.role_list');
 			Route::get('create', 'create')->name('role_create');
@@ -107,7 +108,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 	// Admin > Setup
 	Route::group(['as' => 'setup.', 'prefix' => 'setup'], function () {
 
-		Route::controller(ClassController::class, 'class')->prefix('class')->name('class.')->group(function () {
+		Route::controller(ClassController::class)->prefix('class')->name('class.')->group(function () {
 			Route::get('index', 'index')->name('class_list');
 			Route::get('details/{id}', 'details')->name('details.class_list');
 			Route::get('create', 'create')->name('class_create');
@@ -117,7 +118,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('status/{id}', 'status')->name('status.class_edit');
 			Route::get('delete/{id}', 'delete')->name('class_delete');
 		});
-		Route::controller(SectionController::class, 'section')->prefix('section')->name('section.')->group(function () {
+		Route::controller(SectionController::class)->prefix('section')->name('section.')->group(function () {
 			Route::get('index', 'index')->name('section_list');
 			Route::get('details/{id}', 'details')->name('details.section_list');
 			Route::get('create', 'create')->name('section_create');
@@ -126,6 +127,16 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::put('edit/{id}', 'update')->name('section_edit');
 			Route::get('status/{id}', 'status')->name('status.section_edit');
 			Route::get('delete/{id}', 'delete')->name('section_delete');
+		});
+		Route::controller(BloodGroupController::class)->prefix('blood-group')->name('bg.')->group(function () {
+			Route::get('index', 'index')->name('bg_list');
+			Route::get('details/{id}', 'details')->name('details.bg_list');
+			Route::get('create', 'create')->name('bg_create');
+			Route::post('create', 'store')->name('bg_create');
+			Route::get('edit/{id}', 'edit')->name('bg_edit');
+			Route::put('edit/{id}', 'update')->name('bg_edit');
+			Route::get('status/{id}', 'status')->name('status.bg_edit');
+			Route::get('delete/{id}', 'delete')->name('bg_delete');
 		});
 	});
 

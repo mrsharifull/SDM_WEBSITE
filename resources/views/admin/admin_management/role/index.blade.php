@@ -37,8 +37,8 @@
                                     <td> {{ $loop->iteration }} </td>
                                     <td> {{ $role->name }} </td>
                                     <td> {{ $role->guard_name }} </td>
-                                    <td>{{ $role->created_date() }}</td>
-                                    <td> {{ $role->created_user_name()}} </td>
+                                    <td>{{ timeFormate($role->created_at) }}</td>
+                                    <td> {{ c_user_name($role->created_user)}} </td>
                                     <td>
 
                                        

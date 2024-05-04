@@ -116,6 +116,13 @@ function admin(){
     return auth()->guard('admin')->user();
 }
 
+function c_user_name($user){
+    return $user->name ?? 'System';
+}
+function u_user_name($user){
+    return $user->name ?? '--';
+}
+
 
 
 

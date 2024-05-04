@@ -41,8 +41,8 @@
                                     <td>
                                         <span class="{{ $class->getStatusBadgeClass() }}">{{ $class->getStatus() }}</span>
                                     </td>
-                                    <td>{{ $class->created_date() }}</td>
-                                    <td> {{ $class->created_user_name() }} </td>
+                                    <td>{{ timeFormate($class->created_at) }}</td>
+                                    <td> {{ c_user_name($class->created_user) }} </td>
                                     <td>
 
                                        
