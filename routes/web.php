@@ -5,9 +5,10 @@ use App\Http\Controllers\Admin\AdminManagement\PermissionController;
 use App\Http\Controllers\Admin\AdminManagement\RoleController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\admin\setup\BloodGroupController;
+use App\Http\Controllers\Admin\Setup\BloodGroupController;
+use App\Http\Controllers\Admin\Setup\BoardCointroller;
 use App\Http\Controllers\Admin\Setup\ClassController;
-use App\Http\Controllers\admin\setup\DepartmentController;
+use App\Http\Controllers\Admin\Setup\DepartmentController;
 use App\Http\Controllers\Admin\Setup\SectionController;
 use App\Http\Controllers\Backend\UserManagement\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -148,6 +149,16 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::put('edit/{id}', 'update')->name('department_edit');
 			Route::get('status/{id}', 'status')->name('status.department_edit');
 			Route::get('delete/{id}', 'delete')->name('department_delete');
+		});
+		Route::controller(BoardCointroller::class)->prefix('board')->name('board.')->group(function () {
+			Route::get('index', 'index')->name('board_list');
+			Route::get('details/{id}', 'details')->name('details.board_list');
+			Route::get('create', 'create')->name('board_create');
+			Route::post('create', 'store')->name('board_create');
+			Route::get('edit/{id}', 'edit')->name('board_edit');
+			Route::put('edit/{id}', 'update')->name('board_edit');
+			Route::get('status/{id}', 'status')->name('status.board_edit');
+			Route::get('delete/{id}', 'delete')->name('board_delete');
 		});
 	});
 

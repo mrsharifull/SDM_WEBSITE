@@ -76,6 +76,11 @@
                                     'label' => 'Bloodgroups',
                                 ],
                                 [
+                                    'pageSlug' => 'board',
+                                    'routeName' => 'setup.board.board_list',
+                                    'label' => 'Boards',
+                                ],
+                                [
                                     'pageSlug' => 'department',
                                     'routeName' => 'setup.department.department_list',
                                     'label' => 'Departments',
