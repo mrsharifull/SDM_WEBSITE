@@ -1,3 +1,6 @@
 .table{
     width: 100% !important;
 }
+.card form label+.form-control{
+    margin-bottom: 0;
+}

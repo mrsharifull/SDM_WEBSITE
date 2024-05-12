@@ -24,7 +24,7 @@
                         <div class="form-group">
 
                             <label>{{__('Session')}}</label>
-                            <input type="text" name="session" class="form-control {{ $errors->has('session') ? ' is-invalid' : '' }}" placeholder="Enter session"
+                            <input type="text" name="session" class="form-control {{ $errors->has('session') ? ' is-invalid' : '' }}" placeholder="Enter session (Ex:18-19)"
                                 value="{{ old('session') }}">
                             @include('alerts.feedback', ['field' => 'session'])
                         </div>

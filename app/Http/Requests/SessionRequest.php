@@ -20,9 +20,12 @@ class SessionRequest extends FormRequest
                 'required',
                 'regex:/^\d{2}-\d{2}$/',
                 function($attribute, $value, $fail) {
+                    if (!preg_match('/^\d{2}-\d{2}$/', $value)) {
+                        return $fail('The '.$attribute.' must be in the format "YY-YY".');
+                    }
                     $parts = explode('-', $value);
-                    if ($parts[0] + 1 != $parts[1]) {
-                        return $fail($attribute.' is not a valid session range.');
+                    if (count($parts) === 2 && $parts[0] + 1 != $parts[1]) {
+                        return $fail('The '.$attribute.' must be a valid session range.');
                     }
                 },
             ],
