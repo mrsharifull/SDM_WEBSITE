@@ -10,7 +10,7 @@
                 <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
                     <div class="card-body">
                             @csrf
-                            @method('put')
+                             
 
                             @include('alerts.success')
 
@@ -39,7 +39,7 @@
                 <form method="post" action="{{ route('profile.password') }}" autocomplete="off">
                     <div class="card-body">
                         @csrf
-                        @method('put')
+                         
 
                         @include('alerts.success', ['key' => 'password_status'])
 

@@ -12,25 +12,18 @@ class ClassRequest extends FormRequest
     }
     public function rules(): array
     {
-        return [
-            
-        ]+
-        ($this->isMethod('POST') ? $this->store() : $this->update());
-    }
-
-    protected function store(): array
-    {
-        return [
-            'name' => 'required|unique:classes,name',
-            'class_number' => 'required|numeric|unique:classes,class_number',
-        ];
-    }
-
-    protected function update(): array
-    {
-        return [
-            'name' => 'required|unique:classes,name,'. $this->route('id'),
-            'class_number' => 'required|numeric|unique:classes,class_number,'. $this->route('id'),
-        ];
+        $rules = [];
+        if($this->route('id')){
+                $rules+=[
+                    'name' => 'required|unique:classes,name,'. $this->route('id'),
+                    'class_number' => 'required|numeric|unique:classes,class_number,'. $this->route('id'),
+                ];
+        }else{
+                $rules+=[
+                    'name' => 'required|unique:classes,name',
+                    'class_number' => 'required|numeric|unique:classes,class_number',
+                ];
+        }
+        return $rules; 
     }
 }

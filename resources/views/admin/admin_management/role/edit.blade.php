@@ -49,7 +49,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('am.role.role_edit',$role->id) }}">
                         @csrf
-                        @method('PUT')
+                         
                         <div class="form-group">
                             <label>{{__('Name')}}</label>
                             <input type="text" name="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Enter name"

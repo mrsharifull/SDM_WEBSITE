@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Setup\BoardCointroller;
 use App\Http\Controllers\Admin\Setup\ClassController;
 use App\Http\Controllers\Admin\Setup\DepartmentController;
 use App\Http\Controllers\Admin\Setup\SectionController;
+use App\Http\Controllers\Admin\Setup\SessionController;
 use App\Http\Controllers\Backend\UserManagement\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -46,8 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+	Route::post('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+	Route::post('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXX//
@@ -84,7 +85,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('create', 'create')->name('admin_create');
 			Route::post('create', 'store')->name('admin_create');
 			Route::get('edit/{id}', 'edit')->name('admin_edit');
-			Route::put('edit/{id}', 'update')->name('admin_edit');
+			Route::post('edit/{id}', 'update')->name('admin_edit');
 			Route::get('status/{id}', 'status')->name('status.admin_edit');
 			Route::get('delete/{id}', 'delete')->name('admin_delete');
 		});
@@ -94,7 +95,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('create', 'create')->name('permission_create');
 			Route::post('create', 'store')->name('permission_create');
 			Route::get('edit/{id}', 'edit')->name('permission_edit');
-			Route::put('edit/{id}', 'update')->name('permission_edit');
+			Route::post('edit/{id}', 'update')->name('permission_edit');
 		});
 		Route::controller(RoleController::class)->prefix('role')->name('role.')->group(function () {
 			Route::get('index', 'index')->name('role_list');
@@ -102,7 +103,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('create', 'create')->name('role_create');
 			Route::post('create', 'store')->name('role_create');
 			Route::get('edit/{id}', 'edit')->name('role_edit');
-			Route::put('edit/{id}', 'update')->name('role_edit');
+			Route::post('edit/{id}', 'update')->name('role_edit');
 			Route::get('delete/{id}', 'delete')->name('role_delete');
 		});
 	});
@@ -116,7 +117,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('create', 'create')->name('class_create');
 			Route::post('create', 'store')->name('class_create');
 			Route::get('edit/{id}', 'edit')->name('class_edit');
-			Route::put('edit/{id}', 'update')->name('class_edit');
+			Route::post('edit/{id}', 'update')->name('class_edit');
 			Route::get('status/{id}', 'status')->name('status.class_edit');
 			Route::get('delete/{id}', 'delete')->name('class_delete');
 		});
@@ -126,7 +127,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('create', 'create')->name('section_create');
 			Route::post('create', 'store')->name('section_create');
 			Route::get('edit/{id}', 'edit')->name('section_edit');
-			Route::put('edit/{id}', 'update')->name('section_edit');
+			Route::post('edit/{id}', 'update')->name('section_edit');
 			Route::get('status/{id}', 'status')->name('status.section_edit');
 			Route::get('delete/{id}', 'delete')->name('section_delete');
 		});
@@ -136,7 +137,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('create', 'create')->name('bg_create');
 			Route::post('create', 'store')->name('bg_create');
 			Route::get('edit/{id}', 'edit')->name('bg_edit');
-			Route::put('edit/{id}', 'update')->name('bg_edit');
+			Route::post('edit/{id}', 'update')->name('bg_edit');
 			Route::get('status/{id}', 'status')->name('status.bg_edit');
 			Route::get('delete/{id}', 'delete')->name('bg_delete');
 		});
@@ -146,7 +147,7 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('create', 'create')->name('department_create');
 			Route::post('create', 'store')->name('department_create');
 			Route::get('edit/{id}', 'edit')->name('department_edit');
-			Route::put('edit/{id}', 'update')->name('department_edit');
+			Route::post('edit/{id}', 'update')->name('department_edit');
 			Route::get('status/{id}', 'status')->name('status.department_edit');
 			Route::get('delete/{id}', 'delete')->name('department_delete');
 		});
@@ -156,9 +157,19 @@ Route::group(['middleware' => ['admin','permission']], function () {
 			Route::get('create', 'create')->name('board_create');
 			Route::post('create', 'store')->name('board_create');
 			Route::get('edit/{id}', 'edit')->name('board_edit');
-			Route::put('edit/{id}', 'update')->name('board_edit');
+			Route::post('edit/{id}', 'update')->name('board_edit');
 			Route::get('status/{id}', 'status')->name('status.board_edit');
 			Route::get('delete/{id}', 'delete')->name('board_delete');
+		});
+		Route::controller(SessionController::class)->prefix('session')->name('session.')->group(function () {
+			Route::get('index', 'index')->name('session_list');
+			Route::get('details/{id}', 'details')->name('details.session_list');
+			Route::get('create', 'create')->name('session_create');
+			Route::post('create', 'store')->name('session_create');
+			Route::get('edit/{id}', 'edit')->name('session_edit');
+			Route::post('edit/{id}', 'update')->name('session_edit');
+			Route::get('status/{id}', 'status')->name('status.session_edit');
+			Route::get('delete/{id}', 'delete')->name('session_delete');
 		});
 	});
 

@@ -54,7 +54,7 @@ class AuthBaseModel extends Authenticatable
         }
     }
 
-    public function scopeActivated($query){
+    public function scopeActive($query){
         return $query->where('status',1);
     }
     

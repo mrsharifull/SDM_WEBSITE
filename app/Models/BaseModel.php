@@ -52,7 +52,7 @@ class BaseModel extends Model
         }
     }
 
-    public function scopeActivated($query){
+    public function scopeActive($query){
         return $query->where('status',1);
     }
 }

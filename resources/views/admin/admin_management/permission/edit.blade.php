@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('am.permission.permission_edit',$permission->id) }}">
                         @csrf
-                        @method('PUT')
+                         
                         <div class="form-group">
 
                             <label>{{__('Name')}}</label>

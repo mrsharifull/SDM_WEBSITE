@@ -34,7 +34,7 @@ class SectionController extends Controller
     }
     public function create(): View
     {
-        $data['classes']= Class_::activated()->orderBy('class_number','asc')->get();
+        $data['classes']= Class_::active()->orderBy('class_number','asc')->get();
         return view('admin.setup.section.create',$data);
     }
     public function store(SectionRequest $req): RedirectResponse
@@ -49,7 +49,7 @@ class SectionController extends Controller
     }
     public function edit($id): View
     {
-        $data['classes']= Class_::activated()->orderBy('class_number','asc')->get();
+        $data['classes']= Class_::active()->orderBy('class_number','asc')->get();
         $data['section'] = Section::findOrFail($id);
         return view('admin.setup.section.edit',$data);
     }

@@ -16,23 +16,18 @@ class BoardRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            
-        ]+
-        ($this->isMethod('POST') ? $this->store() : $this->update());
+        $rules = [];
+        if($this->route('id')){
+                $rules+=[
+                    'name' => 'required|unique:boards,name,'. $this->route('id'),
+                ];
+        }else{
+                $rules+=[
+                    'name' => 'required|unique:boards,name',
+                ];
+        }
+        return $rules; 
     }
 
-    protected function store(): array
-    {
-        return [
-            'name' => 'required|unique:boards,name',
-        ];
-    }
-
-    protected function update(): array
-    {
-        return [
-            'name' => 'required|unique:boards,name,'. $this->route('id'),
-        ];
-    }
+    
 }

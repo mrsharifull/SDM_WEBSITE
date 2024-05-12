@@ -25,7 +25,7 @@ class Permission extends SpatiePermission
     function deleted_user(){
         return $this->belongsTo(Admin::class,'deleted_by');
     }
-    public function scopeActivated($query){
+    public function scopeActive($query){
         return $query->where('status',1);
     }
 }

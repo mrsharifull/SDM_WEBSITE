@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('setup.section.section_edit',$section->id) }}">
                         @csrf
-                        @method('PUT')
+                         
                         <div class="form-group">
                             <label>{{ __('Class') }}</label>
                             <select name="class_id" class="form-control {{ $errors->has('class_id') ? ' is-invalid' : '' }}">

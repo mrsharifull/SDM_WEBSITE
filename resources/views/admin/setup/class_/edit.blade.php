@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('setup.class.class_edit',$class->id) }}">
                         @csrf
-                        @method('PUT')
+                         
                         <div class="form-group">
 
                             <label>{{__('Name')}}</label>

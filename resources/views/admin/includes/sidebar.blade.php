@@ -58,15 +58,15 @@
 
             {{-- Setup Routes --}}
             <li>
-                <a class="@if ($pageSlug == 'class' || $pageSlug == 'section') @else collapsed @endif" data-toggle="collapse"
+                <a class="@if ($pageSlug == 'class' || $pageSlug == 'section' || $pageSlug == 'blood_group' || $pageSlug == 'board' || $pageSlug == 'department' || $pageSlug == 'session') @else collapsed @endif" data-toggle="collapse"
                     href="#setup"
-                    @if ($pageSlug == 'class' || $pageSlug == 'section') aria-expanded="true" @else aria-expanded="false" @endif>
+                    @if ($pageSlug == 'class' || $pageSlug == 'section' || $pageSlug == 'blood_group' || $pageSlug == 'board' || $pageSlug == 'department' || $pageSlug == 'session') aria-expanded="true" @else aria-expanded="false" @endif>
                     <i class="fa-solid fa-gear"></i>
                     <span class="nav-link-text">{{ __('Setup') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'class' || $pageSlug == 'section') show @endif" id="setup">
+                <div class="collapse @if ($pageSlug == 'class' || $pageSlug == 'section' || $pageSlug == 'blood_group' || $pageSlug == 'board' || $pageSlug == 'department' || $pageSlug == 'session') show @endif" id="setup">
                     <ul class="nav pl-2">
                         @include('admin.partials.menu_buttons', [
                             'menuItems' => [
@@ -94,6 +94,11 @@
                                     'pageSlug' => 'section',
                                     'routeName' => 'setup.section.section_list',
                                     'label' => 'Sections',
+                                ],
+                                [
+                                    'pageSlug' => 'session',
+                                    'routeName' => 'setup.session.session_list',
+                                    'label' => 'Sessions',
                                 ],
                                 
                             ],
